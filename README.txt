@@ -1,0 +1,1 @@
+Copy all HTML files from artifact to main folder

@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - FreshMart Grocery</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Header (Same as index.html) -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+
+
+                <p>Free Shipping on Orders Over $50 | Customer Support: 1-800-FRESH-01</p>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">Fresh<span>Mart</span></a>
+                    
+                    <div class="search-bar">
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" class="search-input" 
+                                   placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <a href="login.html" id="loginLink" class="header-icon">👤</a>
+                        <div id="userMenu" style="display: none;">
+                            <span id="userName"></span>
+                            <a href="profile.html" class="header-icon">👤</a>
+                            <button id="logoutBtn" class="btn-link">Logout</button>
+                        </div>
+                        <a href="cart.html" class="header-icon">
+                            🛒
+                            <span id="cartBadge" class="badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="navbar">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html" class="active">Products</a></li>
+                    <li class="nav-item"><a href="category.html?slug=fruits-vegetables">Fruits & Vegetables</a></li>
+                    <li class="nav-item"><a href="category.html?slug=dairy-eggs">Dairy</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <div class="products-header">
+                <h2 class="section-title">All Products</h2>
+                <div class="filter-sort">
+                    <select id="categoryFilter" onchange="filterProducts()">
+                        <option value="">All Categories</option>
+                        <option value="1">Fruits & Vegetables</option>
+                        <option value="2">Dairy & Eggs</option>
+                        <option value="3">Bakery</option>
+                        <option value="4">Meat & Seafood</option>
+                        <option value="5">Beverages</option>
+                        <option value="6">Snacks</option>
+                    </select>
+                    
+                    <select id="sortFilter" onchange="filterProducts()">
+                        <option value="newest">Newest</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                        <option value="rating">Highest Rated</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="productsContainer" class="product-grid">
+                <!-- Products loaded dynamically -->
+            </div>
+            
+            <div id="pagination" class="pagination"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About FreshMart</h3>
+                    <p>Your trusted online grocery store delivering fresh, quality products right to your doorstep.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FreshMart Grocery. All rights reserved.</p>
+            </div>
+        </div>
+</footer>
+<!-- MAIN JS (defines API_BASE) -->
+<script src="assets/js/main.js"></script>
+
+<!-- PRODUCTS PAGE SCRIPT -->
+<script>
+let currentPage = 1;
+
+document.addEventListener("DOMContentLoaded", loadProducts);
+
+async function loadProducts() {
+    let url = `${API_BASE}/products.php?action=list`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        console.log("API RESPONSE:", data);
+
+        if (data.success) {
+            renderProducts(data.products);
+        } else {
+            document.getElementById("productsContainer").innerHTML =
+                "<p>No products found</p>";
+        }
+    } catch (e) {
+        console.error("Fetch error:", e);
+    }
+}
+
+function renderProducts(products) {
+    const container = document.getElementById("productsContainer");
+
+    container.innerHTML = products.map(p => `
+        <div class="product-card">
+            <img 
+              src="assets/images/products/${p.image}"
+              onerror="this.src='assets/images/products/default.png'"
+              class="product-image"
+            />
+            <div class="product-info">
+                <h3 class="product-name">${p.name}</h3>
+                <div class="product-price">
+                    <span class="current-price">${formatCurrency(p.price)}</span>
+                    ${p.original_price ? `<span class="original-price">${formatCurrency(p.original_price)}</span>` : ''}
+                </div>
+                <div class="product-actions">
+                    <button
+                        class="btn-cart add-to-cart"
+                        data-product-id="${p.id}"
+                        data-product-name="${p.name}"
+                        data-product-price="${p.price}"
+                        data-product-image="${p.image}"
+                    >
+                        Add to Cart
+                    </button>
+                    <button
+                        class="btn-wishlist add-to-wishlist"
+                        data-product-id="${p.id}"
+                    >
+                        ❤️
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join("");
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Checkout | FreshMart</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  background:#f4f6f8;
+}
+
+/* Header */
+.header{
+  background:#fff;
+  padding:15px 40px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+
+.header h2{
+  color:#2e7d32;
+}
+
+.header span{
+  color:#555;
+}
+
+/* Layout */
+.checkout-wrapper{
+  max-width:1100px;
+  margin:40px auto;
+  display:grid;
+  grid-template-columns: 2fr 1fr;
+  gap:30px;
+}
+
+/* Card */
+.card{
+  background:#fff;
+  border-radius:12px;
+  padding:25px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+  margin-bottom:25px;
+}
+
+.card h3{
+  margin-bottom:15px;
+  font-weight:500;
+  color:#333;
+}
+
+/* Inputs */
+input{
+  width:100%;
+  padding:12px;
+  border:1px solid #ccc;
+  border-radius:8px;
+  margin-bottom:15px;
+}
+
+.radio{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+/* Order summary */
+.summary-item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.total{
+  font-size:18px;
+  font-weight:600;
+  margin-top:10px;
+}
+
+.place-btn{
+  width:100%;
+  padding:14px;
+  background:#4CAF50;
+  border:none;
+  color:white;
+  font-size:16px;
+  border-radius:8px;
+  cursor:pointer;
+  margin-top:15px;
+}
+
+.place-btn:hover{
+  background:#388e3c;
+}
+
+/* Small */
+.small{
+  font-size:13px;
+  color:#777;
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h2><i class="fas fa-shopping-basket"></i> FreshMart</h2>
+  <span>Secure Checkout</span>
+</div>
+
+<!-- Checkout -->
+<div class="checkout-wrapper">
+
+  <!-- LEFT -->
+  <div>
+    <div class="card">
+      <h3>Contact Details</h3>
+      <input type="email" placeholder="Email address">
+      <input type="text" placeholder="Phone number">
+    </div>
+
+    <div class="card">
+      <h3>Delivery Address</h3>
+      <input type="text" placeholder="Full name">
+      <input type="text" placeholder="Address">
+      <input type="text" placeholder="City">
+      <input type="text" placeholder="Pincode">
+    </div>
+
+    <div class="card">
+      <h3>Delivery Method</h3>
+      <div class="radio">
+        <input type="radio" checked> Standard Delivery (₹40)
+      </div>
+      <div class="radio">
+        <input type="radio"> Express Delivery (₹80)
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Payment Method</h3>
+      <div class="radio">
+        <input type="radio" checked> Cash on Delivery
+      </div>
+      <div class="radio">
+        <input type="radio"> UPI / Card
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div>
+    <div class="card">
+      <h3>Order Summary</h3>
+
+      <div id="orderItems"></div>
+
+      <hr style="margin:15px 0">
+
+      <div class="summary-item">
+        <span>Subtotal</span>
+        <span id="summarySubtotal">₹0.00</span>
+      </div>
+      <div class="summary-item">
+        <span>Shipping</span>
+        <span id="summaryShipping">₹0.00</span>
+      </div>
+      <div class="summary-item">
+        <span>Tax</span>
+        <span id="summaryTax">₹0.00</span>
+      </div>
+
+      <div class="summary-item total">
+        <span>Total</span>
+        <span id="summaryTotal">₹0.00</span>
+      </div>
+
+      <button class="place-btn">Place Order</button>
+
+      <p class="small" style="margin-top:10px;">
+        <i class="fas fa-lock"></i> 100% Secure Checkout
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/js/main.js"></script>
+<script>
+const contactEmailInput = document.querySelector('input[type="email"]');
+const contactPhoneInput = document.querySelector('input[placeholder="Phone number"]');
+const fullNameInput = document.querySelector('input[placeholder="Full name"]');
+const addressInput = document.querySelector('input[placeholder="Address"]');
+const cityInput = document.querySelector('input[placeholder="City"]');
+const pincodeInput = document.querySelector('input[placeholder="Pincode"]');
+
+async function loadCheckoutSummary() {
+  try {
+    const res = await fetch(`${API_BASE}/cart.php?action=get`, { credentials: "include" });
+    const data = await res.json();
+    const items = data.success ? data.items : [];
+
+    const itemsContainer = document.getElementById("orderItems");
+    if (!items.length) {
+      itemsContainer.innerHTML = '<p class="small">Your cart is empty.</p>';
+      return;
+    }
+
+    itemsContainer.innerHTML = items.map(item => `
+      <div class="summary-item">
+        <span>${item.name} (x${item.quantity})</span>
+        <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+      </div>
+    `).join("");
+
+    let subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+    const FREE_SHIPPING_THRESHOLD = 50;
+    const SHIPPING_FEE = 40;
+    const shipping = subtotal >= FREE_SHIPPING_THRESHOLD || subtotal === 0 ? 0 : SHIPPING_FEE;
+    const tax = subtotal * 0.05;
+    const total = subtotal + shipping + tax;
+
+    document.getElementById("summarySubtotal").textContent = `₹${subtotal.toFixed(2)}`;
+    document.getElementById("summaryShipping").textContent = shipping === 0 ? "FREE" : `₹${shipping.toFixed(2)}`;
+    document.getElementById("summaryTax").textContent = `₹${tax.toFixed(2)}`;
+    document.getElementById("summaryTotal").textContent = `₹${total.toFixed(2)}`;
+  } catch (e) {
+    console.error("Checkout summary load error:", e);
+  }
+}
+
+document.querySelector(".place-btn").addEventListener("click", async () => {
+  if (!currentUser) {
+    alert("Please login to place an order.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const payload = {
+    payment_method: "cod",
+    shipping_name: fullNameInput.value || currentUser.name || "",
+    shipping_phone: contactPhoneInput.value || "",
+    shipping_address: addressInput.value || "",
+    shipping_city: cityInput.value || "",
+    shipping_state: "", // can be expanded later
+    shipping_zip: pincodeInput.value || "",
+    notes: ""
+  };
+
+  if (!payload.shipping_name || !payload.shipping_phone || !payload.shipping_address || !payload.shipping_city || !payload.shipping_zip) {
+    alert("Please fill in all required shipping details.");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/orders.php?action=create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      alert("Order placed successfully! Order #" + data.order_number);
+      updateCartBadge();
+      window.location.href = "profile.html";
+    } else {
+      alert(data.message || "Unable to place order.");
+    }
+  } catch (e) {
+    console.error("Place order error:", e);
+    alert("Unable to place order. Please try again.");
+  }
+});
+
+loadCheckoutSummary();
+</script>
+
+</body>
+</html>

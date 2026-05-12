@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshMart Grocery - Fresh Products Delivered</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <p>Free Shipping on Orders Over $50 | Customer Support: 1-800-FRESH-01</p>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">Fresh<span>Mart</span></a>
+                    
+                    <div class="search-bar">
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" class="search-input" 
+                                   placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <a href="login.html" id="loginLink" class="header-icon">
+                            👤
+                        </a>
+                        <div id="userMenu" style="display: none;">
+                            <span id="userName"></span>
+                            <a href="profile.html" class="header-icon">👤</a>
+                            <button id="logoutBtn" class="btn-link">Logout</button>
+                        </div>
+                        <a href="cart.html" class="header-icon">
+                            🛒
+                            <span id="cartBadge" class="badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="navbar">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="active">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="category.html?slug=fruits-vegetables">Fruits & Vegetables</a></li>
+                    <li class="nav-item"><a href="category.html?slug=dairy-eggs">Dairy</a></li>
+                    <li class="nav-item"><a href="category.html?slug=meat-seafood">Meat & Seafood</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Fresh Groceries Delivered to Your Door</h1>
+            <p>Quality products, great prices, and fast delivery</p>
+            <a href="products.html" class="btn btn-outline">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="category-grid">
+                <div class="category-card" onclick="location.href='category.html?slug=fruits-vegetables'">
+                    <div class="category-icon">🥬</div>
+                    <h3 class="category-name">Fruits & Vegetables</h3>
+                </div>
+                <div class="category-card" onclick="location.href='category.html?slug=dairy-eggs'">
+                    <div class="category-icon">🥛</div>
+                    <h3 class="category-name">Dairy & Eggs</h3>
+                </div>
+                <div class="category-card" onclick="location.href='category.html?slug=bakery'">
+                    <div class="category-icon">🍞</div>
+                    <h3 class="category-name">Bakery</h3>
+                </div>
+                <div class="category-card" onclick="location.href='category.html?slug=meat-seafood'">
+                    <div class="category-icon">🥩</div>
+                    <h3 class="category-name">Meat & Seafood</h3>
+                </div>
+                <div class="category-card" onclick="location.href='category.html?slug=beverages'">
+                    <div class="category-icon">🥤</div>
+                    <h3 class="category-name">Beverages</h3>
+                </div>
+                <div class="category-card" onclick="location.href='category.html?slug=snacks'">
+                    <div class="category-icon">🍿</div>
+                    <h3 class="category-name">Snacks</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div id="featuredProducts" class="product-grid">
+                <!-- Products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About FreshMart</h3>
+                    <p>Your trusted online grocery store delivering fresh, quality products right to your doorstep.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Customer Service</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Track Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>Email: support@freshmart.com</p>
+                    <p>Phone: 1-800-FRESH-01</p>
+                    <p>Hours: Mon-Sat 8AM-8PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FreshMart Grocery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Load featured products
+        async function loadFeaturedProducts() {
+            try {
+                const response = await fetch(`${API_BASE}/products.php?action=featured&limit=8`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderProducts(data.products, 'featuredProducts');
+                }
+            } catch (error) {
+                console.error('Load featured products error:', error);
+            }
+        }
+        
+        function renderProducts(products, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    ${product.is_featured ? '<span class="product-badge featured">Featured</span>' : ''}
+                    ${product.original_price ? `<span class="product-badge">${Math.round((product.original_price - product.price) / product.original_price * 100)}% OFF</span>` : ''}
+                    <img src="assets/images/products/${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-price">
+                            <span class="current-price">${formatCurrency(product.price)}</span>
+                            ${product.original_price ? `<span class="original-price">${formatCurrency(product.original_price)}</span>` : ''}
+                        </div>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(Math.round(product.avg_rating || 5))}</span>
+                            <span class="rating-count">(${product.review_count || 0})</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-cart add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                            <button class="btn-wishlist add-to-wishlist" data-product-id="${product.id}">❤️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        loadFeaturedProducts();
+    </script>
+</body>
+</html>

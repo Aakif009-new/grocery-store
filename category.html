@@ -1,0 +1,153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category - FreshMart Grocery</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <p>Free Shipping on Orders Over $50 | Customer Support: 1-800-FRESH-01</p>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">Fresh<span>Mart</span></a>
+                    
+                    <div class="search-bar">
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" class="search-input" 
+                                   placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <a href="login.html" id="loginLink" class="header-icon">👤</a>
+                        <a href="cart.html" class="header-icon">
+                            🛒
+                            <span id="cartBadge" class="badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="navbar">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="about.html">About</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Category Products -->
+    <section class="products">
+        <div class="container">
+            <h2 id="categoryTitle" class="section-title">Category Products</h2>
+            
+            <div id="productsContainer" class="product-grid">
+                <!-- Products loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 FreshMart Grocery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const categorySlug = urlParams.get('slug');
+        
+        // Category ID mapping (based on schema.sql)
+        const categoryMap = {
+            'fruits-vegetables': { id: 1, name: 'Fruits & Vegetables' },
+            'dairy-eggs': { id: 2, name: 'Dairy & Eggs' },
+            'bakery': { id: 3, name: 'Bakery' },
+            'meat-seafood': { id: 4, name: 'Meat & Seafood' },
+            'beverages': { id: 5, name: 'Beverages' },
+            'snacks': { id: 6, name: 'Snacks' },
+            'pantry-staples': { id: 7, name: 'Pantry Staples' },
+            'frozen-foods': { id: 8, name: 'Frozen Foods' }
+        };
+        
+        const category = categoryMap[categorySlug];
+        
+        if (category) {
+            document.getElementById('categoryTitle').textContent = category.name;
+            document.title = `${category.name} - FreshMart Grocery`;
+            loadCategoryProducts(category.id);
+        } else {
+            window.location.href = 'products.html';
+        }
+        
+        async function loadCategoryProducts(categoryId) {
+            try {
+                const response = await fetch(`${API_BASE}/products.php?action=list&category=${categoryId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderProducts(data.products, 'productsContainer');
+                }
+            } catch (error) {
+                console.error('Load category products error:', error);
+            }
+        }
+        
+        function renderProducts(products, containerId) {
+            const container = document.getElementById(containerId);
+            
+            if (products.length === 0) {
+                container.innerHTML = '<p style="text-align:center;padding:60px;">No products available in this category</p>';
+                return;
+            }
+            
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <a href="product-detail.html?id=${product.id}">
+                        <img src="assets/images/products/${product.image}" alt="${product.name}" class="product-image">
+                    </a>
+                    <div class="product-info">
+                        <h3 class="product-name">
+                            <a href="product-detail.html?id=${product.id}" style="text-decoration:none;color:inherit;">
+                                ${product.name}
+                            </a>
+                        </h3>
+                        <div class="product-price">
+                            <span class="current-price">${formatCurrency(product.price)}</span>
+                            ${product.original_price ? `<span class="original-price">${formatCurrency(product.original_price)}</span>` : ''}
+                        </div>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(Math.round(product.avg_rating || 5))}</span>
+                            <span class="rating-count">(${product.review_count || 0})</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-cart add-to-cart" data-product-id="${product.id}">Add to Cart</button>
+                            <button class="btn-wishlist add-to-wishlist" data-product-id="${product.id}">❤️</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

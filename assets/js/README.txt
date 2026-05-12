@@ -1,0 +1,1 @@
+Copy JS files from artifact

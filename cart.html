@@ -1,0 +1,75 @@
+*/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - FreshMart Grocery</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <p>Free Shipping on Orders Over $50 | Customer Support: 1-800-FRESH-01</p>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">Fresh<span>Mart</span></a>
+                    
+                    <div class="search-bar">
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" class="search-input" 
+                                   placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <a href="login.html" id="loginLink" class="header-icon">👤</a>
+                        <a href="cart.html" class="header-icon">
+                            🛒
+                            <span id="cartBadge" class="badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <h2 class="section-title">Shopping Cart</h2>
+            
+            <div class="cart-container">
+                <div id="cartItems" class="cart-items">
+                    <!-- Cart items loaded dynamically -->
+                </div>
+                
+                <div id="cartSummary" class="cart-summary">
+                    <!-- Cart summary loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 FreshMart Grocery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/cart.js"></script>
+</body>
+</html>

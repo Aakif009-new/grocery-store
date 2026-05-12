@@ -1,0 +1,162 @@
+*/
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FreshMart Grocery</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <style>
+        .about-section {
+            padding: 60px 0;
+        }
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        .about-content h2 {
+            color: var(--primary-color);
+            margin: 30px 0 20px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .feature-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <p>Free Shipping on Orders Over $50 | Customer Support: 1-800-FRESH-01</p>
+            </div>
+        </div>
+        
+        <div class="header-main">
+            <div class="container">
+                <div class="header-content">
+                    <a href="index.html" class="logo">Fresh<span>Mart</span></a>
+                    
+                    <div class="search-bar">
+                        <form id="searchForm" class="search-form">
+                            <input type="text" id="searchInput" class="search-input" 
+                                   placeholder="Search for products...">
+                            <button type="submit" class="search-btn">Search</button>
+                        </form>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <a href="login.html" id="loginLink" class="header-icon">👤</a>
+                        <a href="cart.html" class="header-icon">
+                            🛒
+                            <span id="cartBadge" class="badge">0</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="navbar">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html">Home</a></li>
+                    <li class="nav-item"><a href="products.html">Products</a></li>
+                    <li class="nav-item"><a href="about.html" class="active">About</a></li>
+                    <li class="nav-item"><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- About Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 40px;">About FreshMart</h1>
+                
+                <p>Welcome to FreshMart, your trusted online grocery store delivering fresh, quality products right to your doorstep. Since our founding, we've been committed to providing our customers with the finest selection of groceries, from farm-fresh produce to premium pantry staples.</p>
+                
+                <h2>Our Mission</h2>
+                <p>At FreshMart, our mission is simple: to make grocery shopping convenient, affordable, and enjoyable. We believe that everyone deserves access to high-quality, fresh food without the hassle of traditional shopping.</p>
+                
+                <h2>Why Choose Us?</h2>
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <div class="feature-icon">🌱</div>
+                        <h3>Fresh Products</h3>
+                        <p>Sourced directly from local farms and trusted suppliers</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">🚚</div>
+                        <h3>Fast Delivery</h3>
+                        <p>Same-day and next-day delivery options available</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">💰</div>
+                        <h3>Best Prices</h3>
+                        <p>Competitive pricing with regular discounts and offers</p>
+                    </div>
+                    <div class="feature-box">
+                        <div class="feature-icon">✅</div>
+                        <h3>Quality Guaranteed</h3>
+                        <p>100% satisfaction guarantee on all products</p>
+                    </div>
+                </div>
+                
+                <h2>Our Values</h2>
+                <ul style="margin-left: 20px;">
+                    <li><strong>Quality:</strong> We never compromise on the quality of our products</li>
+                    <li><strong>Sustainability:</strong> We support eco-friendly practices and local farmers</li>
+                    <li><strong>Customer Service:</strong> Your satisfaction is our top priority</li>
+                    <li><strong>Innovation:</strong> We continuously improve our services to serve you better</li>
+                </ul>
+                
+                <p style="margin-top: 40px; text-align: center;">
+                    <a href="products.html" class="btn btn-primary">Start Shopping</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About FreshMart</h3>
+                    <p>Your trusted online grocery store delivering fresh, quality products right to your doorstep.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 FreshMart Grocery. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
